@@ -13,6 +13,7 @@ const hpp = require('hpp');
 //npm i hpp
 const cookieParser = require('cookie-parser');
 //npm i cookie-parser
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -63,6 +64,8 @@ app.use(xss());
 app.use(hpp({
     whitelist: ['duration', 'ratingsQuantity', 'ratingsAverage', 'maxGroupSize', 'difficulty', 'price']
 }));
+
+app.use(compression());
 
 //Test middleware
 app.use((req, res, next) => {
