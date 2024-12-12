@@ -80,7 +80,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
 // 3) ROUTES
 
 app.use("/", viewRouter);
@@ -96,7 +95,7 @@ app.all("*", (req, res, next) => {
 
     // const err = new Error(`Can't find ${req.originalUrl} on this server`);
     // err.status = 'fail';
-    // err.statusCode = 404;
+    // err.statusCode   = 404;
 
     next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 })
