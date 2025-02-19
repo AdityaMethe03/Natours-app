@@ -89,7 +89,7 @@ exports.protect = catchAsync(async (req, res, next) => {
         token = req.cookies.jwt;
     }
 
-    if (!token) {
+    if (!token || token == "loggedout") {// check if token is "loggedout" to prevent jwt malformed error
         return next(
             new AppError('You are not logged in! Please log in to get access.', 401)
         );
@@ -97,6 +97,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
     // 2) Verification token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    console.log(decoded);
 
     // 3) Check if user still exists
     const currentUser = await User.findById(decoded.id);
@@ -125,6 +126,9 @@ exports.protect = catchAsync(async (req, res, next) => {
 // Only for rendered pages, no errors!
 exports.isLoggedIn = async (req, res, next) => {
     if (req.cookies.jwt) {
+        // Ignore "loggedout" token to prevent jwt malformed error
+        if (req.cookies.jwt === 'loggedout') return next();
+
         try {
             // 1) verify token
             const decoded = await promisify(jwt.verify)(
