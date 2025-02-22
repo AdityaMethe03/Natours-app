@@ -1,19 +1,36 @@
-import { login, logout } from './login';
+import { login, logout, signup } from './login';
 import { displayMap } from './mapbox';
 import { updateSettings } from './updateSettings';
 
 
 //DOM ELEMENTS
 const mapBox = document.getElementById('map');
+const signupForm = document.querySelector('.form--signup');
 const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
-const userPasswordForm = document.querySelector('.form-user-passowrd');
+const userPasswordForm = document.querySelector('.form-user-password');
 
 if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     // console.log(locations);
     displayMap(locations);
+}
+
+console.log(document.querySelector('.form--signup'));
+
+if (signupForm) {
+    signupForm.addEventListener('submit', e => {
+        e.preventDefault();
+        console.log('Signup form submitted!');
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const passwordConfirm = document.getElementById('passwordConfirm').value;
+        const role = document.getElementById('role').value;
+        console.log(name, email, password, passwordConfirm, role)
+        signup(name, email, password, passwordConfirm, role);
+    })
 }
 
 if (loginForm) {

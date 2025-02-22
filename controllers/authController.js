@@ -37,11 +37,13 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+
     const newUser = await User.create({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm
+        passwordConfirm: req.body.passwordConfirm,
+        role: req.body.role
     });
 
     const url = `${req.protocol}://${req.get('host')}/me`;
@@ -74,7 +76,9 @@ exports.logout = (req, res) => {
         expires: new Date(Date.now() + 10 * 1000),
         httpOnly: true
     })
-    res.status(200).json({ status: 'success' })
+    res.status(200).json({
+        status: 'success'
+    })
 }
 
 exports.protect = catchAsync(async (req, res, next) => {
