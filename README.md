@@ -34,14 +34,21 @@ A feature-rich tour booking API built using Node.js, Express, MongoDB, and Mongo
 ## 📂 Project Structure
 ```
 📦 natours-api
-  ├── 📁 controllers     # Business logic for tours, users, etc.
+  ├── 📁 controllers     # Business logic for tours, users, and bookings
+  ├── 📁 dev-data        # Sample data for database seeding
   ├── 📁 models          # Mongoose schemas & models
-  ├── 📁 routes          # API route handlers
+  ├── 📁 public          # Static files (CSS, JS, images)
+  ├── 📁 routes          # API route handlers (tours, users, bookings)
   ├── 📁 utils           # Utility functions (error handling, etc.)
-  ├── 📁 middleware      # Custom middleware (authentication, error handling, etc.)
-  ├── server.js         # Entry point of the application
-  ├── config.env        # Environment variables (ignored in .gitignore)
-  └── README.md         # Documentation
+  ├── 📁 views           # Template views (if using templating engine like Pug)
+  ├── .eslintrc.json     # ESLint configuration
+  ├── .gitignore         # Files and directories to ignore in version control
+  ├── .prettierrc        # Prettier configuration for code formatting
+  ├── README.md          # Project documentation
+  ├── app.js             # Express app initialization
+  ├── package.json       # Project dependencies and scripts
+  ├── package-lock.json  # Dependency lock file
+  └── server.js          # Main server file
 ```
 ## ⚙️ Installation & Setup
 
