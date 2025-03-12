@@ -6,13 +6,11 @@ A feature-rich tour booking API built using Node.js, Express, MongoDB, and Mongo
 
 ## 🚀 Features
 
-
 - User authentication & authorization (JWT-based).
 - Role-based access control (Admin, Users, etc.).
 - Geospatial queries ($geoNear) for nearby tour searches.
 - API rate limiting, data sanitization, and security enhancements.
 - CRUD operations for tours, users, and bookings.
-- Stripe payment integration (if added).
 - Query filtering, sorting, pagination, and field selection.
 - Advanced error handling using global error middleware.
 - MongoDB Aggregation Pipeline for analytics.
