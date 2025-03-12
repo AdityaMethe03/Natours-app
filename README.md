@@ -1,7 +1,9 @@
 #Natours Application🌍🏕️
+
 A feature-rich tour booking API built using Node.js, Express, MongoDB, and Mongoose, implementing authentication, authorization, geospatial queries, and advanced error handling.
 
 🚀 Features
+
 1.User authentication & authorization (JWT-based).
 2.Role-based access control (Admin, Users, etc.).
 3.Geospatial queries ($geoNear) for nearby tour searches.
@@ -13,6 +15,7 @@ A feature-rich tour booking API built using Node.js, Express, MongoDB, and Mongo
 9.MongoDB Aggregation Pipeline for analytics.
 
 🛠️ Tech Stack
+
 Backend: Node.js, Express.js
 Database: MongoDB, Mongoose
 Authentication: JWT (JSON Web Token), bcrypt
@@ -20,6 +23,7 @@ Security: Helmet, rate limiting, CORS, xss-clean, Express-mongo-sanitize
 Testing: Postman
 
 📂 Project Structure
+
   📦 natours-api
   ├── 📁 controllers     # Business logic for tours, users, etc.
   ├── 📁 models          # Mongoose schemas & models
