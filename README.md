@@ -72,7 +72,6 @@ JWT_SECRET=your_secret_key
 JWT_EXPIRES_IN=90d
 EMAIL_USERNAME=your_email
 EMAIL_PASSWORD=your_email_password
-STRIPE_SECRET_KEY=your_stripe_key
 ```
 
 4️⃣ Run the Server
