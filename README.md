@@ -104,6 +104,9 @@ npm start
 
 (More endpoints available in API documentation.)
 
+## API Documentation
+- Refer to the following api documentation for more information.
+  https://documenter.getpostman.com/view/36760774/2sB2cYcL12
 
 ## Deployment
 
