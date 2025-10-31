@@ -60,13 +60,13 @@ export const logout = async () => {
             url: 'http://127.0.0.1:3000/api/v1/users/logout'
         });
 
+        console.log(res.data.status)
+
         if (res.data.status === 'success') {
-            // res.redirect('/');
-            location.reload(true); //set to true to reload fresh page
             showAlert('success', 'Logged out successfully!');
-            // window.setTimeout(() => {
-            //     location.assign('/');
-            // }, 1500);
+            window.setTimeout(() => {
+                location.assign('/');
+            }, 1500);
         }
     } catch (error) {
         console.log(error.response);
