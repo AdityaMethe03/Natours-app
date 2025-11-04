@@ -12897,8 +12897,6 @@ var logout = exports.logout = /*#__PURE__*/function () {
           res = _context3.sent;
           console.log(res.data.status);
           if (res.data.status === 'success') {
-            // location.reload(true); //set to true to reload fresh page
-            // res.redirect('/');
             (0, _alerts.showAlert)('success', 'Logged out successfully!');
             window.setTimeout(function () {
               location.assign('/');
@@ -13139,7 +13137,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63406" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59034" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

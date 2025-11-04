@@ -1,0 +1,41 @@
+extends base
+
+block content
+  main.main
+    .user-view
+      nav.user-view__menu
+        ul.side-nav
+          +navItem('/me', 'Settings', 'settings', true)
+          +navItem('#', 'My bookings', 'briefcase')
+          +navItem('#', 'My reviews', 'star')
+          +navItem('#', 'Billing', 'credit-card')
+
+        - if (user.role === 'admin') 
+          .admin-nav
+            h5.admin-nav__heading Admin
+            ul.side-nav
+              +navItem('/manage-tours', 'Manage tours', 'map')
+              +navItem('/manage-users', 'Manage users', 'users')
+              +navItem('/manage-reviews', 'Manage reviews', 'star')
+              +navItem('#', 'Manage bookings', 'briefcase')
+      .user-view__content
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md Manage Tours
+
+          table.table
+            thead
+              tr
+                th Tour Name
+                th Duration
+                th Price
+                th Actions
+            tbody
+              each tour in tours
+                tr
+                  td= tour.name
+                  td= `${tour.duration} days`
+                  td= `$${tour.price}`
+                  td
+                    a.btn-small.btn-small--green(href=`/tour/${tour.slug}`) View
+                    a.btn-small.btn-small--blue(href='#') Edit
+                    a.btn-small.btn-small--red(href='#') Delete

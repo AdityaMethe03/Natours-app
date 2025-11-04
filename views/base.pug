@@ -9,6 +9,13 @@ html
       link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
       title Natours | #{title}
 
+  mixin navItem(link, text, icon, active)
+    li(class=`${active? 'side-nav--active' : ''}`)
+      a(href=`${link}`)
+        svg
+          use(xlink:href=`img/icons.svg#icon-${icon}`)
+        | #{text}
+
   body 
     // HEADER
     include _header

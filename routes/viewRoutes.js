@@ -17,4 +17,24 @@ router.get('/me', authController.protect, viewsController.getAccount);
 
 router.post('/submit-user-data', authController.protect, viewsController.updateUserData);
 
+// Admin routes
+router.get(
+    '/manage-tours',
+    authController.protect,
+    authController.restrictTo('admin'),
+    viewsController.getManageTours
+);
+router.get(
+    '/manage-users',
+    authController.protect,
+    authController.restrictTo('admin'),
+    viewsController.getManageUsers
+);
+router.get(
+    '/manage-reviews',
+    authController.protect,
+    authController.restrictTo('admin'),
+    viewsController.getManageReviews
+);
+
 module.exports = router;
