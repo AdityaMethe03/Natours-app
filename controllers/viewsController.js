@@ -83,13 +83,29 @@ exports.getManageTours = catchAsync(async (req, res, next) => {
 });
 
 exports.getManageUsers = catchAsync(async (req, res, next) => {
-    // 1) Get all users
-    const users = await User.find();
+    // 1) Pagination Setup
+    const page = req.query.page * 1 || 1;
+    const limit = 10; // Users per page
+    const skip = (page - 1) * limit;
 
-    // 2) Render template
+    // 2) Get total number of users (needed for calculating total pages)
+    const numUsers = await User.countDocuments();
+    const totalPages = Math.ceil(numUsers / limit);
+
+    // 3) Fetch specific subset of users for current page
+    const users = await User.find()
+        .select('+active')
+        .sort('name')
+        .skip(skip)
+        .limit(limit);
+
+    // 4) Render template
     res.status(200).render('manageUsers', {
         title: 'Manage Users',
-        users
+        users,
+        currentPage: page,
+        totalPages,
+        results: numUsers
     });
 });
 

@@ -1,0 +1,83 @@
+extends base
+
+block content
+  main.main
+    .user-view
+      nav.user-view__menu
+        ul.side-nav
+          +navItem('/me', 'Settings', 'settings')
+          +navItem('#', 'My bookings', 'briefcase')
+          +navItem('#', 'My reviews', 'star')
+          +navItem('#', 'Billing', 'credit-card')
+
+        - if (user.role === 'admin')
+          .admin-nav
+            h5.admin-nav__heading Admin
+            ul.side-nav
+              +navItem('/manage-tours', 'Manage tours', 'map')
+              +navItem('/manage-users', 'Manage users', 'users', true)
+              +navItem('/manage-reviews', 'Manage reviews', 'star')
+              +navItem('#', 'Manage bookings', 'briefcase')
+
+      .user-view__content
+        .manage-users-container
+          .flex-header
+            h2.heading-secondary Manage Users (#{results})
+
+          if users.length > 0
+            .table-wrapper
+              table.manage-table
+                thead
+                  tr
+                    th User
+                    th Role
+                    th Status
+                    th Actions
+                tbody
+                  each user in users
+                    tr
+                      td
+                        .user-cell
+                          img.manage-user-photo(src=`/img/users/${user.photo}`, alt=`Photo of ${user.name}`)
+                          .user-details
+                            span.user-name= user.name
+                            span.user-email= user.email
+                      td
+                        span.role-badge(class=`role-${user.role}`)= user.role
+                      td
+                        - const status = user.active ? 'active' : 'inactive';
+                        span.status-badge(class=`status-${status}`)= status
+                      td
+                        a.btn-text.edit-user(href=`#`) Edit
+                        | 
+                        a.btn-text.delete-user(href=`#` data-user-id=user.id) Delete
+
+            //- PAGINATION
+            if totalPages > 1
+              .pagination
+                if currentPage > 1
+                  a.pagination__link(href=`?page=${currentPage - 1}`)
+                    svg.pagination__icon
+                      use(xlink:href='/img/icons.svg#icon-chevron-left')
+                    span Prev
+                else
+                  span.pagination__link.pagination__link--disabled
+                    svg.pagination__icon
+                      use(xlink:href='/img/icons.svg#icon-chevron-left')
+                    span Prev
+
+                span.pagination__text Page #{currentPage} of #{totalPages}
+
+                if currentPage < totalPages
+                  a.pagination__link(href=`?page=${currentPage + 1}`)
+                    span Next
+                    svg.pagination__icon
+                      use(xlink:href='/img/icons.svg#icon-chevron-right')
+                else
+                  span.pagination__link.pagination__link--disabled
+                    span Next
+                    svg.pagination__icon
+                      use(xlink:href='/img/icons.svg#icon-chevron-right')
+          else
+            .no-results
+              h2 No users found.
