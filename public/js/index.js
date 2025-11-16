@@ -10,6 +10,8 @@ const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
+const filterRole = document.getElementById('role');
+const filterSort = document.getElementById('sort');
 
 if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
@@ -75,3 +77,16 @@ if (userPasswordForm) {
         document.getElementById('password-confirm').value = '';
     });
 };
+
+if (filterRole) {
+    filterRole.addEventListener('change', e => {
+        // Automatically submit the parent form when value changes
+        e.target.form.submit();
+    });
+}
+
+if (filterSort) {
+    filterSort.addEventListener('change', e => {
+        e.target.form.submit();
+    });
+}

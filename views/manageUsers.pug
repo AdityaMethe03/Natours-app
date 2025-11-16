@@ -24,6 +24,25 @@ block content
           .flex-header
             h2.heading-secondary Manage Users (#{results})
 
+            //- FILTER & SORT FORM
+            form.filter-form(method='GET' action='/manage-users')
+              .filter-group
+                label(for='role') Role:
+                select#role(name='role')
+                  option(value='all' selected=currentRole==='all') All Roles
+                  option(value='user' selected=currentRole==='user') User
+                  option(value='guide' selected=currentRole==='guide') Guide
+                  option(value='lead-guide' selected=currentRole==='lead-guide') Lead Guide
+                  option(value='admin' selected=currentRole==='admin') Admin
+
+              .filter-group
+                label(for='sort') Sort by:
+                select#sort(name='sort')
+                  option(value='name-asc' selected=currentSort==='name-asc') Name (A-Z)
+                  option(value='name-desc' selected=currentSort==='name-desc') Name (Z-A)
+                  option(value='newest' selected=currentSort==='newest') Newest First
+                  option(value='oldest' selected=currentSort==='oldest') Oldest First
+
           if users.length > 0
             .table-wrapper
               table.manage-table
@@ -48,15 +67,17 @@ block content
                         - const status = user.active ? 'active' : 'inactive';
                         span.status-badge(class=`status-${status}`)= status
                       td
-                        a.btn-text.edit-user(href=`#`) Edit
-                        | 
-                        a.btn-text.delete-user(href=`#` data-user-id=user.id) Delete
+                        a.btn-text.edit-user(href='#') Edit
+                        |
+                        a.btn-text.delete-user(href='#' data-user-id=user.id) Delete
 
-            //- PAGINATION
+            //- PAGINATION (Updated to preserve filters)
             if totalPages > 1
               .pagination
+                - const baseLink = `?role=${currentRole}&sort=${currentSort}`
+
                 if currentPage > 1
-                  a.pagination__link(href=`?page=${currentPage - 1}`)
+                  a.pagination__link(href=`${baseLink}&page=${currentPage - 1}`)
                     svg.pagination__icon
                       use(xlink:href='/img/icons.svg#icon-chevron-left')
                     span Prev
@@ -69,7 +90,7 @@ block content
                 span.pagination__text Page #{currentPage} of #{totalPages}
 
                 if currentPage < totalPages
-                  a.pagination__link(href=`?page=${currentPage + 1}`)
+                  a.pagination__link(href=`${baseLink}&page=${currentPage + 1}`)
                     span Next
                     svg.pagination__icon
                       use(xlink:href='/img/icons.svg#icon-chevron-right')
@@ -80,4 +101,5 @@ block content
                       use(xlink:href='/img/icons.svg#icon-chevron-right')
           else
             .no-results
-              h2 No users found.
+              h2 No users found matching your criteria.
+              a.btn-text(href='/manage-users') Clear Filters

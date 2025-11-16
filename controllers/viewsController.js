@@ -83,29 +83,54 @@ exports.getManageTours = catchAsync(async (req, res, next) => {
 });
 
 exports.getManageUsers = catchAsync(async (req, res, next) => {
-    // 1) Pagination Setup
+    // 1) Filtering Logic
+    const filterObj = {};
+
+    // If a role is selected and it's not "all", add it to the query
+    if (req.query.role && req.query.role !== 'all') {
+        filterObj.role = req.query.role;
+    }
+
+    // 2) Sorting Logic
+    let sortStr = 'name'; // Default sort (A-Z)
+
+    if (req.query.sort) {
+        const sortMap = {
+            'name-asc': 'name',
+            'name-desc': '-name',
+            'newest': '-_id', // _id naturally sorts by creation time
+            'oldest': '_id'
+        };
+        // Use the map or fallback to default
+        sortStr = sortMap[req.query.sort] || 'name';
+    }
+
+    // 3) Pagination Setup
     const page = req.query.page * 1 || 1;
-    const limit = 10; // Users per page
+    const limit = 10;
     const skip = (page - 1) * limit;
 
-    // 2) Get total number of users (needed for calculating total pages)
-    const numUsers = await User.countDocuments();
+    // 4) Execute Query
+    // IMPORTANT: Count *filtered* documents for correct pagination numbers
+    const numUsers = await User.countDocuments(filterObj);
     const totalPages = Math.ceil(numUsers / limit);
 
-    // 3) Fetch specific subset of users for current page
-    const users = await User.find()
-        .select('+active')
-        .sort('name')
-        .skip(skip)
-        .limit(limit);
+    const users = await User.find(filterObj)
+      .select('+active')
+      .sort(sortStr)
+      .skip(skip)
+      .limit(limit);
 
-    // 4) Render template
+    // 5) Render Template
     res.status(200).render('manageUsers', {
         title: 'Manage Users',
         users,
         currentPage: page,
         totalPages,
-        results: numUsers
+        results: numUsers,
+        // Pass current filters back to view so we can keep dropdowns selected
+        currentRole: req.query.role || 'all',
+        currentSort: req.query.sort || 'name-asc'
     });
 });
 
