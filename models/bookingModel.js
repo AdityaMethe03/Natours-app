@@ -8,7 +8,7 @@ const bookingSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Tour',
+        ref: 'User',
         required: [true, 'Booking must belong to a User!']
     },
     price: {

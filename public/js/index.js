@@ -1,6 +1,7 @@
 import { login, logout, signup } from './login';
 import { displayMap } from './mapbox';
 import { updateSettings } from './updateSettings';
+import { bookTour } from './stripe';
 
 
 //DOM ELEMENTS
@@ -12,6 +13,7 @@ const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const filterRole = document.getElementById('role');
 const filterSort = document.getElementById('sort');
+const bookBtn = document.getElementById('book-tour');
 
 if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
@@ -89,4 +91,12 @@ if (filterSort) {
     filterSort.addEventListener('change', e => {
         e.target.form.submit();
     });
+}
+
+if(bookBtn){
+    bookBtn.addEventListener('click', async e => {
+        e.target.textContent = 'Processing...';
+        const tourId = e.target.dataset.tourId;
+        bookTour(tourId);
+    })
 }
