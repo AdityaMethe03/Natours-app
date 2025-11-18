@@ -1,5 +1,6 @@
 const Tour = require('../models/tourModel');
 const User = require('../models/userModel');
+const Booking = require('../models/bookingModel');
 const Review = require('../models/reviewModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -34,6 +35,20 @@ exports.getTour = catchAsync(async (req, res, next) => {
     res.status(200).render('tour', {
         title: `${tour.name} Tour`,
         tour
+    });
+})
+
+exports.getMyTours = catchAsync(async (req, res, next) => {
+    // 1) Find all bookings
+    const bookings = await Booking.find({ user: req.user.id })
+
+    // 2)Find tours with the returned IDs
+    const tourIDs = bookings.map(el => el.tour.id);
+    const tours = await Tour.find({ _id: { $in: tourIDs } });
+
+    res.status(200).render('overview', {
+        title: 'My Tours',
+        tours
     });
 })
 
@@ -116,10 +131,10 @@ exports.getManageUsers = catchAsync(async (req, res, next) => {
     const totalPages = Math.ceil(numUsers / limit);
 
     const users = await User.find(filterObj)
-      .select('+active')
-      .sort(sortStr)
-      .skip(skip)
-      .limit(limit);
+        .select('+active')
+        .sort(sortStr)
+        .skip(skip)
+        .limit(limit);
 
     // 5) Render Template
     res.status(200).render('manageUsers', {
