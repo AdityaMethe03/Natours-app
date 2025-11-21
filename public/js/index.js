@@ -21,18 +21,18 @@ if (mapBox) {
     displayMap(locations);
 }
 
-console.log(document.querySelector('.form--signup'));
+// console.log(document.querySelector('.form--signup'));
 
 if (signupForm) {
     signupForm.addEventListener('submit', e => {
         e.preventDefault();
-        console.log('Signup form submitted!');
+        // console.log('Signup form submitted!');
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const passwordConfirm = document.getElementById('passwordConfirm').value;
         const role = document.getElementById('role').value;
-        console.log(name, email, password, passwordConfirm, role)
+        // console.log(name, email, password, passwordConfirm, role)
         signup(name, email, password, passwordConfirm, role);
     })
 }
@@ -93,7 +93,7 @@ if (filterSort) {
     });
 }
 
-if(bookBtn){
+if (bookBtn) {
     bookBtn.addEventListener('click', async e => {
         e.target.textContent = 'Processing...';
         const tourId = e.target.dataset.tourId;
